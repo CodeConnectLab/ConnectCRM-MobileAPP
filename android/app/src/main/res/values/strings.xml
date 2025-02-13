@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">Connect CRM</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey" translatable="false">qizfeG7H2PzzQfLNZQIwja0i-QrECmSuj3mv0_</string>
+</resources>

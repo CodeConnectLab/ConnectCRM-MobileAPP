@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "690967737660",
+    "project_id": "connectcrm-b29a2",
+    "storage_bucket": "connectcrm-b29a2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690967737660:android:a7419c514c8420889d5a39",
+        "android_client_info": {
+          "package_name": "praful.mobilecrm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd_SaIan2vG6y27T5QKz7BkHaqawoGOE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

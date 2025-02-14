@@ -112,12 +112,21 @@ project.ext.react = [
 
 
 dependencies {
-    // The version of react-native is set by the React Native Gradle Plugin
+    // Remove these individual version implementations
+    // implementation 'com.google.firebase:firebase-core:22.0.0'
+    // implementation 'com.google.firebase:firebase-messaging:23.4.0'
+
+    // Add the Firebase BoM (Bill of Materials)
+    implementation platform('com.google.firebase:firebase-bom:32.7.1')
+    
+    // Add the Firebase dependencies without versions
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging'
+
+    // Keep your other existing dependencies
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-call-log')
     implementation project(':react-native-background-actions')
-    implementation 'com.google.firebase:firebase-core:21.1.1' // or the latest version available
-    implementation 'com.google.firebase:firebase-messaging:24.1.0'
     implementation project(':react-native-push-notification')
     implementation project(':react-native-code-push')
 

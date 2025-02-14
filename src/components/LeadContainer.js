@@ -390,7 +390,17 @@ export const LeadContainer = ({
               </View>
             )}
 
-            {item?.city && (
+            {item?.productService && (
+              <View style={{flexDirection: 'row', gap: 10}}>
+                <Image
+                  source={ImagerHanlde.location}
+                  resizeMode="contain"
+                  style={styles.itemIcon}
+                />
+                <Text style={styles.itemSubText}>{item?.productService?.name || ''}</Text>
+              </View>
+            )}
+            {/* {item?.city && (
               <View style={{flexDirection: 'row', gap: 10}}>
                 <Image
                   source={ImagerHanlde.location}
@@ -399,7 +409,7 @@ export const LeadContainer = ({
                 />
                 <Text style={styles.itemSubText}>{item?.city || ''}</Text>
               </View>
-            )}
+            )} */}
           </View>
 
           <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>

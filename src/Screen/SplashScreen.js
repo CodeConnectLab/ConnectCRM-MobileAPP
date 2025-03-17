@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View, StyleSheet, NativeModules, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,12 +6,11 @@ import BackgroundActions from 'react-native-background-actions';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import MainContainer from '../components/MainContainer';
 import { ImagerHanlde } from '../utils/ImageProvider';
-import { CallLogPermission } from '../utils/Permissions';
-import { API } from '../API';
-import { END_POINT } from '../API/UrlProvider';
 import { COLORS } from '../styles/themes';
 import { VersionView } from '../utils';
 import { ScreenIdentifiers } from '../routes';
+import { API } from '../API';
+import { END_POINT } from '../API/UrlProvider';
 
 const { CallLogModule } = NativeModules;
 
@@ -33,42 +32,55 @@ const taskOptions = {
   batchSize: 500 // Number of logs to fetch at once
 };
 
-const SplashScreen = ({ authData }) => {
+const SplashScreen = ({ authData, permissionsHandled = false }) => {
   const navigation = useNavigation();
   const sessionId = authData?.sessionId;
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     console.log('SplashScreen mounted, sessionId:', sessionId);
-    initializeAppAndNavigate();
+    console.log('permissionsHandled:', permissionsHandled);
+    
+    // Only start background tasks if permissions have been handled
+    if (permissionsHandled && Platform.OS === 'android') {
+      initializeBackgroundTasks();
+    }
+    
+    // Initialize the app but don't navigate until permissions are handled
+    initializeApp();
+    
     return () => {
       console.log('SplashScreen unmounting');
     };
-  }, []);
+  }, [permissionsHandled]); // Re-run when permissionsHandled changes
 
-  const initializeAppAndNavigate = async () => {
-    try {
-      if (Platform.OS === 'android') {
-        initializeBackgroundTasks();
-      }
-      
+  // Effect to handle navigation after everything is ready
+  useEffect(() => {
+    // If both initialization is done AND permissions are handled, then navigate
+    if (isInitialized && permissionsHandled) {
+      // Add a small delay for better UX
       setTimeout(() => {
         handleNavigation();
+      }, 1000);
+    }
+  }, [isInitialized, permissionsHandled]);
+
+  const initializeApp = async () => {
+    try {
+      // Add a small delay to show the splash screen
+      setTimeout(() => {
+        setIsInitialized(true);
       }, 2000);
     } catch (error) {
       console.error('Error in app initialization:', error);
-      handleNavigation();
+      setIsInitialized(true);
     }
   };
 
   const initializeBackgroundTasks = async () => {
     try {
-      CallLogPermission(async res => {
-        if (res?.status) {
-          await setupBackgroundTask();
-        } else {
-          console.log('Call log permission denied');
-        }
-      });
+      // Set up background tasks now that we have permission
+      await setupBackgroundTask();
     } catch (error) {
       console.error('Error setting up background tasks:', error);
     }

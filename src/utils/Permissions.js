@@ -12,6 +12,13 @@ export const CallLogPermission = async callback => {
     if (Platform.OS === 'android') {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+        {
+          title: 'Call Log Permission',
+          message: 'This app needs access to your call logs to display your call history.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        }
       );
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -26,6 +33,65 @@ export const CallLogPermission = async callback => {
   } catch (error) {
     callback({status: false});
     console.error(error);
+  }
+};
+
+// Request all permissions at once
+export const requestAllPermissionsAtOnce = async () => {
+  console.log('Requesting all permissions at once');
+  try {
+    if (Platform.OS === 'android') {
+      // Create an array of permission requests to request simultaneously
+      const permissions = [];
+      
+      // Add call log permission
+      permissions.push(
+        PermissionsAndroid.PERMISSIONS.READ_CALL_LOG
+      );
+      
+      // Add location permission
+      permissions.push(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+      );
+      
+      // Add notification permission for Android 13+
+      if (Platform.Version >= 33) {
+        permissions.push(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+        );
+      }
+      
+      // Request all permissions at once
+      const results = await PermissionsAndroid.requestMultiple(permissions);
+      
+      console.log('Permission results:', results);
+      
+      // Return the results for each permission
+      return {
+        callLog: results[PermissionsAndroid.PERMISSIONS.READ_CALL_LOG] === PermissionsAndroid.RESULTS.GRANTED,
+        location: results[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] === PermissionsAndroid.RESULTS.GRANTED,
+        notification: Platform.Version >= 33 
+          ? results[PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS] === PermissionsAndroid.RESULTS.GRANTED 
+          : true
+      };
+    } else {
+      // iOS handles permissions differently
+      const { status } = await requestNotifications(['alert', 'sound', 'badge']);
+      const notificationGranted = status === RESULTS.GRANTED;
+      
+      return {
+        callLog: true, // iOS doesn't have call log permission
+        location: true, // For iOS, location is handled via Info.plist
+        notification: notificationGranted
+      };
+    }
+  } catch (error) {
+    console.error('Error requesting all permissions:', error);
+    return {
+      callLog: false,
+      location: false,
+      notification: false
+    };
   }
 };
 
@@ -52,6 +118,8 @@ export const requestLocationPermission = async () => {
 };
 
 export const checkNotificationPermission = async () => {
+  console.log('checkNotificationPermission');
+
   try {
     if (Platform.OS === 'android') {
       if (Platform.Version >= 33) {
@@ -60,7 +128,7 @@ export const checkNotificationPermission = async () => {
           PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
           {
             title: 'Notification Permission',
-            message: 'This app needs notification permission',
+            message: 'This app needs notification permission to alert you about new updates',
             buttonPositive: 'OK',
             buttonNegative: 'Cancel',
             buttonNeutral: 'Ask Me Later',

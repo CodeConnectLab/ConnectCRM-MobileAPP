@@ -207,7 +207,7 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
         }
 
         return (
-            <View style={{ gap: 5 }}>
+            <View key={item?.title+index+"sidebarMenu"} style={{ gap: 5 }}>
                 <Pressable
                     onPress={() => itemHandle(item)}
                     style={{ flexDirection: 'row', alignItems: 'center', gap: 10, borderRadius: 10, paddingHorizontal: 5, paddingVertical: 5 }}>

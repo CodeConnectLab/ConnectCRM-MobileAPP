@@ -13,15 +13,22 @@ import {
 
 const Stack = createStackNavigator();
 
-const MainRoute = ({}) => {
+// Create a wrapper component for SplashScreen that handles permission state
+const SplashScreenWrapper = ({permissionsHandled, ...props}) => {
+  // Pass the permissionsHandled prop to the SplashScreen component
+  return <Screens.SplashScreen permissionsHandled={permissionsHandled} {...props} />;
+};
+
+const MainRoute = ({permissionsHandled = false}) => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName={ScreenIdentifiers.SplashScreen}>
         <Stack.Screen
           name={ScreenIdentifiers.SplashScreen}
-          component={Screens.SplashScreen}
           options={fadAnimation}
-        />
+        >
+          {props => <SplashScreenWrapper {...props} permissionsHandled={permissionsHandled} />}
+        </Stack.Screen>
         <Stack.Screen
           name={ScreenIdentifiers.LoginScreen}
           component={Screens.LoginScreen}

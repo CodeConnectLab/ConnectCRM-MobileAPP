@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, StyleSheet, NativeModules, Platform } from 'react-native';
+import { Image, View, StyleSheet, NativeModules, Platform, Text } from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackgroundActions from 'react-native-background-actions';
@@ -200,10 +200,18 @@ const SplashScreen = ({ authData, permissionsHandled = false }) => {
     >
       <View style={styles.container}>
         <Image
+          source={ImagerHanlde.clientLogo}
+          resizeMode="contain"
+          style={styles.clientLogo}
+        />
+      {/* <Text style={{ fontSize: 20, color: COLORS.Black, marginBottom:-20 }}>
+      collaboration with
+      </Text> */}
+        {/* <Image
           source={ImagerHanlde.logo}
           resizeMode="contain"
           style={styles.splashImg}
-        />
+        /> */}
       </View>
       {VersionView()}
     </MainContainer>
@@ -217,10 +225,16 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    // gap: 60
   },
   splashImg: {
     width: 250,
     height: 80,
+    alignSelf: 'center',
+  },
+  clientLogo: {
+    width: "100%",
+    // height: 80,
     alignSelf: 'center',
   },
 });

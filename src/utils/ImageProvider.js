@@ -3,6 +3,8 @@ const {
 } = require('../Screen/prevAuth/Login/ForgotPassword');
 
 exports.ImagerHanlde = {
+  clientLogoSVG: require('../../assets/images/clientLogoSVG.svg'),
+  clientLogo: require('../../assets/images/clientLogo.png'),
   logo: require('../../assets/images/crmLogo.png'),
   BottomNav: {
     menu: require('../../assets/images/menu.png'),

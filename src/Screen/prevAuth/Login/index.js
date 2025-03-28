@@ -162,7 +162,7 @@ const LoginScreen = ({ user, authData }) => {
           }}>
           <View style={{ flex: 1 }}>
             <Image
-              source={ImagerHanlde.logo}
+              source={ImagerHanlde.clientLogo}
               resizeMode="contain"
               style={styles.logo}
             />
@@ -296,8 +296,8 @@ const LoginScreen = ({ user, authData }) => {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 200,
-    height: 50,
+    width: 400,
+    height: 100,
     alignSelf: 'center',
     marginBottom: 50,
   },

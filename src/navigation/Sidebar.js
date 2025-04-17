@@ -82,15 +82,15 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
             IsVisable: false,
             sublist: null
         },
-        {
-            id: 5,
-            title: 'Call History',
-            subTitle: 'Track and Review Your Communication Records',
-            icon: ImagerHanlde.MenuNav.call,
-            ScreenName: ScreenIdentifiers.CallHistory,
-            IsVisable: false,
-            sublist: null
-        },
+        // {
+        //     id: 5,
+        //     title: 'Call History',
+        //     subTitle: 'Track and Review Your Communication Records',
+        //     icon: ImagerHanlde.MenuNav.call,
+        //     ScreenName: ScreenIdentifiers.CallHistory,
+        //     IsVisable: false,
+        //     sublist: null
+        // },
         {
             id: 6,
             title: 'Setting',
@@ -245,7 +245,7 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
                 </Pressable>
                 {item?.IsVisable && item?.sublist !== null && item?.sublist.map((subItem, subIndex) => {
                     return (
-                        <Pressable onPress={() => subItemHandle(subItem)}
+                        <Pressable key={subItem?.title+subIndex+"subSidebarMenu"} onPress={() => subItemHandle(subItem)}
                             style={{ width: '95%', alignSelf: "flex-end", flexDirection: 'row', alignItems: 'center', gap: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 6 }}>
                             {subItem?.icon && (
                                 <Image

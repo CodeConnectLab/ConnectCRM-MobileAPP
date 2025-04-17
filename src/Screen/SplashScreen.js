@@ -120,77 +120,77 @@ const SplashScreen = ({ authData, permissionsHandled = false }) => {
   const uploadCallLogsTask = async (taskData) => {
     let lastCheckTime = Date.now();
 
-    while (BackgroundActions.isRunning()) {
-      try {
-        const currentTime = Date.now();
-        console.log(`Background task running. Time since last check: ${(currentTime - lastCheckTime) / 1000}s`);
+    // while (BackgroundActions.isRunning()) {
+    //   try {
+    //     const currentTime = Date.now();
+    //     console.log(`Background task running. Time since last check: ${(currentTime - lastCheckTime) / 1000}s`);
         
-        await uploadCallLogs();
-        lastCheckTime = currentTime;
+    //     await uploadCallLogs();
+    //     lastCheckTime = currentTime;
         
-        await sleep(taskData.delay || taskOptions.delay);
-      } catch (error) {
-        console.error('Error in background task:', error);
-        await sleep(taskOptions.delay);
-      }
-    }
+    //     await sleep(taskData.delay || taskOptions.delay);
+    //   } catch (error) {
+    //     console.error('Error in background task:', error);
+    //     await sleep(taskOptions.delay);
+    //   }
+    // }
   };
 
-  const uploadCallLogs = async () => {
-    try {
-      const storedLogs = JSON.parse(await AsyncStorage.getItem('uploadedLogs')) || [];
-      const sessionId = JSON.parse(await AsyncStorage.getItem('sessionId'));
+  // const uploadCallLogs = async () => {
+  //   try {
+  //     const storedLogs = JSON.parse(await AsyncStorage.getItem('uploadedLogs')) || [];
+  //     const sessionId = JSON.parse(await AsyncStorage.getItem('sessionId'));
 
-      if (!sessionId) {
-        console.log('No session ID available, skipping upload');
-        return;
-      }
+  //     if (!sessionId) {
+  //       console.log('No session ID available, skipping upload');
+  //       return;
+  //     }
 
-      if (!CallLogModule?.getCallLogs) {
-        console.error('CallLogModule is not properly initialized');
-        return;
-      }
+  //     if (!CallLogModule?.getCallLogs) {
+  //       console.error('CallLogModule is not properly initialized');
+  //       return;
+  //     }
 
-      const callLogs = await CallLogModule.getCallLogs(
-        "ALL CALLS",
-        "simType",
-        taskOptions.batchSize
-      );
+  //     const callLogs = await CallLogModule.getCallLogs(
+  //       "ALL CALLS",
+  //       "simType",
+  //       taskOptions.batchSize
+  //     );
 
-      if (!callLogs || callLogs.length === 0) {
-        console.log('No call logs available');
-        return;
-      }
+  //     if (!callLogs || callLogs.length === 0) {
+  //       console.log('No call logs available');
+  //       return;
+  //     }
 
-      const newLogs = callLogs.filter(log => 
-        !storedLogs.some(storedLog => storedLog?.timestamp === log?.timestamp)
-      );
+  //     const newLogs = callLogs.filter(log => 
+  //       !storedLogs.some(storedLog => storedLog?.timestamp === log?.timestamp)
+  //     );
 
-      if (newLogs.length === 0) {
-        console.log('No new call logs to upload');
-        return;
-      }
+  //     if (newLogs.length === 0) {
+  //       console.log('No new call logs to upload');
+  //       return;
+  //     }
 
-      console.log(`Uploading ${newLogs.length} new call logs`);
+  //     console.log(`Uploading ${newLogs.length} new call logs`);
 
-      const body = JSON.stringify(newLogs);
-      await API.postAuthAPI(
-        body,
-        END_POINT.afterAuth.CallHistory,
-        sessionId,
-        null,
-        async res => {
-          if (res?.data) {
-            await AsyncStorage.setItem('uploadedLogs', JSON.stringify(callLogs));
-            console.log(`Successfully uploaded ${newLogs.length} call logs`);
-          }
-        }
-      );
-    } catch (error) {
-      console.error('Error in uploadCallLogs:', error);
-      throw error;
-    }
-  };
+  //     const body = JSON.stringify(newLogs);
+  //     // await API.postAuthAPI(
+  //     //   body,
+  //     //   END_POINT.afterAuth.CallHistory,
+  //     //   sessionId,
+  //     //   null,
+  //     //   async res => {
+  //     //     if (res?.data) {
+  //     //       await AsyncStorage.setItem('uploadedLogs', JSON.stringify(callLogs));
+  //     //       console.log(`Successfully uploaded ${newLogs.length} call logs`);
+  //     //     }
+  //     //   }
+  //     // );
+  //   } catch (error) {
+  //     console.error('Error in uploadCallLogs:', error);
+  //     throw error;
+  //   }
+  // };
 
   return (
     <MainContainer 

@@ -365,7 +365,7 @@ const AnalyticReportScreen = ({user, authData}) => {
         <FlatList
           data={ApiDate?.leads || []}
           renderItem={renderItem}
-          keyExtractor={item => item.srNo.toString()}
+          keyExtractor={(item, index) => item.srNo.toString() + index}
           style={{flex: 1, width: '100%'}}
           contentContainerStyle={{
             gap: 0,
@@ -550,7 +550,7 @@ const AnalyticReportScreen = ({user, authData}) => {
         <FlatList
           data={CallReportData || []}
           renderItem={renderCallItem}
-          keyExtractor={item => item?.clientName?.toString()}
+          keyExtractor={(item, index) => item?.clientName?.toString() + index}
           style={{flex: 1, width: '100%'}}
           contentContainerStyle={{
             gap: 0,
@@ -660,7 +660,7 @@ const AnalyticReportScreen = ({user, authData}) => {
               {'Manage report'}
             </Text>
           </Pressable>
-          <Pressable
+          {/* <Pressable
             onPress={() => setReportType(2)}
             style={{
               flex: 1,
@@ -682,7 +682,7 @@ const AnalyticReportScreen = ({user, authData}) => {
               }}>
               {'Call List'}
             </Text>
-          </Pressable>
+          </Pressable> */}
         </View>
       </View>
       {reportType === 1 && ManageReport()}

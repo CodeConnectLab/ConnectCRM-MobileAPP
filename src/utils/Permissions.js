@@ -9,27 +9,28 @@ import {
 
 export const CallLogPermission = async callback => {
   try {
-    if (Platform.OS === 'android') {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
-        {
-          title: 'Call Log Permission',
-          message: 'This app needs access to your call logs to display your call history.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        }
-      );
+    callback({status: false});
+    // if (Platform.OS === 'android') {
+    //   const granted = await PermissionsAndroid.request(
+    //     PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+    //     {
+    //       title: 'Call Log Permission',
+    //       message: 'This app needs access to your call logs to display your call history.',
+    //       buttonNeutral: 'Ask Me Later',
+    //       buttonNegative: 'Cancel',
+    //       buttonPositive: 'OK',
+    //     }
+    //   );
 
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        callback({status: true});
-      } else {
-        callback({status: false});
-        console.log('Call Log permission denied');
-      }
-    } else {
-      callback({status: false});
-    }
+    //   if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    //     callback({status: true});
+    //   } else {
+    //     callback({status: false});
+    //     console.log('Call Log permission denied');
+    //   }
+    // } else {
+    //   callback({status: false});
+    // }
   } catch (error) {
     callback({status: false});
     console.error(error);
@@ -45,9 +46,9 @@ export const requestAllPermissionsAtOnce = async () => {
       const permissions = [];
       
       // Add call log permission
-      permissions.push(
-        PermissionsAndroid.PERMISSIONS.READ_CALL_LOG
-      );
+      // permissions.push(
+      //   PermissionsAndroid.PERMISSIONS.READ_CALL_LOG
+      // );
       
       // Add location permission
       permissions.push(
@@ -68,7 +69,7 @@ export const requestAllPermissionsAtOnce = async () => {
       
       // Return the results for each permission
       return {
-        callLog: results[PermissionsAndroid.PERMISSIONS.READ_CALL_LOG] === PermissionsAndroid.RESULTS.GRANTED,
+        // callLog: results[PermissionsAndroid.PERMISSIONS.READ_CALL_LOG] === PermissionsAndroid.RESULTS.GRANTED,
         location: results[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] === PermissionsAndroid.RESULTS.GRANTED,
         notification: Platform.Version >= 33 
           ? results[PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS] === PermissionsAndroid.RESULTS.GRANTED 
@@ -80,7 +81,7 @@ export const requestAllPermissionsAtOnce = async () => {
       const notificationGranted = status === RESULTS.GRANTED;
       
       return {
-        callLog: true, // iOS doesn't have call log permission
+        // callLog: true, // iOS doesn't have call log permission
         location: true, // For iOS, location is handled via Info.plist
         notification: notificationGranted
       };

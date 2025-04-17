@@ -1,9 +1,11 @@
 ## Generate the APK Release
 cd android
+
 ./gradlew assembleRelease
 
 ## Generate the APK Debug
 cd android
+
 ./gradlew assembleDebug
 
 

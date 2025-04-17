@@ -1,5 +1,6 @@
 // import {TEST_URL, LIVE_URL} from '@env';
 
+// const TEST_URL = 'https://api.codeconnect.in/api/v1/';
 const TEST_URL = 'https://crm.redkaizen.in/api/v1/';
 const LIVE_URL = 'https://crm.redkaizen.in/api/v1/';
 const TEST_URL1 = 'https://f067-45-118-156-30.ngrok-free.app/api/v1/';

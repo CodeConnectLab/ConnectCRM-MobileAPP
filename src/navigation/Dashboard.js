@@ -156,12 +156,12 @@ const Dashboard = ({user, authData, apiData}) => {
       icon: ImagerHanlde.listIcon,
       headerShown: true,
     },
-    {
-      name: ScreenIdentifiers.CallReportScreen,
-      screen: Screens.CallReportScreen,
-      icon: ImagerHanlde.BottomNav.bar_chart,
-      headerShown: true,
-    },
+    // {
+    //   name: ScreenIdentifiers.CallReportScreen,
+    //   screen: Screens.CallReportScreen,
+    //   icon: ImagerHanlde.BottomNav.bar_chart,
+    //   headerShown: true,
+    // },
   ];
 
   const HederHandle = ({title = ''}) => (

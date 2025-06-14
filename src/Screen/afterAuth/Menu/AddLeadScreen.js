@@ -548,6 +548,10 @@ const AddLeadScreen = ({user, authData, route}) => {
       showToast('Please enter the date and time');
     } else if (formState.description === '') {
       showToast('Please enter the description.');
+    } else if (route.params?.screenType === 'Update Details' && formState.comment === '') {
+      showToast('Please enter valid comment.');
+    } else if (route.params?.screenType === 'Update Details' && !formState?.status?.Id) {
+      showToast('Status is required.');
     } else {
       if (formState.email === '') {
         uploadDate(type);
@@ -597,7 +601,6 @@ const AddLeadScreen = ({user, authData, route}) => {
     };
 
     setisLoading(true);
-
     const Url =
       route.params?.screenType !== 'Update Details'
         ? END_POINT.afterAuth.getAllLead
@@ -606,7 +609,6 @@ const AddLeadScreen = ({user, authData, route}) => {
     if (route.params?.screenType !== 'Update Details') {
       API.postAuthAPI(body, Url, authData.sessionId, null, res => {
         setisLoading(false);
-        console.log(res);
         if (res.status) {
           if (type === 1) {
             navigation.navigate(ScreenIdentifiers.Dashboard, {
@@ -744,6 +746,7 @@ const AddLeadScreen = ({user, authData, route}) => {
       <DateTimePickerModal
         isVisible={focusStates['datetime']}
         mode="datetime" // 'datetime' mode for selecting both date and time
+        // date={formState?.datetime ? new Date(formState.datetime) : new Date()}
         onConfirm={selectedDate => {
           setFocusStates(prev => ({...prev, ['datetime']: false}));
           handleInputChange('datetime', selectedDate);

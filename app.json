@@ -1,4 +1,10 @@
 {
   "name": "mobileCRM",
-  "displayName": "mobileCRM"
+  "displayName": "mobileCRM",
+  "extra": {
+    "eas": {
+      "projectId": "4c0b83db-67ee-444e-8376-ae55d8604824"
+    }
+  },
+  "owner": "shashankyadav"
 }

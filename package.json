@@ -19,6 +19,8 @@
     "@react-navigation/native": "^7.0.4",
     "@react-navigation/stack": "^7.0.7",
     "axios": "^1.7.7",
+    "expo": "^53.0.12",
+    "expo-dev-client": "~5.2.1",
     "i": "^0.3.7",
     "npm": "^10.9.1",
     "react": "18.3.1",

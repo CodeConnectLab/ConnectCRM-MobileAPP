@@ -243,9 +243,19 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
                     }
 
                 </Pressable>
-                {item?.IsVisable && item?.sublist !== null && item?.sublist.map((subItem, subIndex) => {
+                {item?.IsVisable && item?.sublist !== null && item?.sublist
+                    .filter(subItem => {
+                        // Hide Product & Service menu when user is not Super Admin
+                        if (subItem.title === "Product & Service" && user?.loginType !== 'Super Admin') {
+                            return false;
+                        }
+                        return true;
+                    })
+                    .map((subItem, subIndex) => {
                     return (
-                        <Pressable onPress={() => subItemHandle(subItem)}
+                        <Pressable 
+                            key={subItem?.title+subIndex+"sidebarSubMenu"}
+                            onPress={() => subItemHandle(subItem)}
                             style={{ width: '95%', alignSelf: "flex-end", flexDirection: 'row', alignItems: 'center', gap: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 6 }}>
                             {subItem?.icon && (
                                 <Image

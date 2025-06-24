@@ -134,7 +134,12 @@ export const putAuthAPI = (
           }
         }
 
-        callback({status: false, error: error, data: null, message: ''});
+        callback({
+          status: false,
+          error: error,
+          data: null,
+          message: error?.response?.data?.message,
+        });
       });
   } catch (error) {
     callback({status: false, error: error, data: null, type: 'catch'});

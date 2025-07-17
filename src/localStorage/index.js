@@ -6,7 +6,6 @@ export const LocalStorage_Identifiers = {
   refreshToken: 'refreshToken',
   TOKEN_TIMESTAMP: 'TOKENTIMESTAMP',
   AskExpert: 'AskExpert',
-  FCM_TOKEN: 'FCM_TOKEN',
 };
 
 export const getStringData = async (key, callback) => {

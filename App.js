@@ -6,7 +6,6 @@ import {configStore} from './src/redux/store';
 import {StatusBar} from 'react-native';
 import {requestAllPermissionsAtOnce} from './src/utils/Permissions';
 
-import {fcmService} from './src/utils/FCMService';
 import {LocalStorage, LocalStorage_Identifiers} from './src/localStorage';
 import CodePush from 'react-native-code-push';
 
@@ -29,9 +28,6 @@ const App = () => {
     setPermissionsHandled(true);
     
     // Set up FCM services
-    fcmService.requestUserPermission();
-    fcmService.registerAppWithFCM();
-    fcmService.register(onRegister, onNotification, onOpenNotification);
   };
 
   const onRegister = async token => {

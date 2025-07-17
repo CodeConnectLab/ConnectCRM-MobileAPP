@@ -57,9 +57,6 @@ const LoginScreen = ({ user, authData }) => {
   }, []);
 
   const handleLogin = async () => {
-    const fcmToken = await LocalStorage.getObjectData(
-      LocalStorage_Identifiers.FCM_TOKEN,
-    );
     if (!validateEmail(EmailInput)) {
       showToast('Please enter a valid email address.');
     } else if (PasswordInput === '' || PasswordInput.length < 4) {
@@ -69,7 +66,6 @@ const LoginScreen = ({ user, authData }) => {
       const body = {
         email: EmailInput,
         password: PasswordInput,
-        fcmMobileToken: fcmToken || ""
       };
 
       API.postAuthAPI(body, END_POINT.preAuth.login, null, null, async res => {

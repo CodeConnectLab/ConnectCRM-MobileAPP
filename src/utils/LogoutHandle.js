@@ -16,19 +16,9 @@ export const LogoutHandle = async navigation => {
     dispatchRemoveUser();
     // dispatchRemoveAPI();
 
-    const fcmToken = await LocalStorage.getObjectData(
-      LocalStorage_Identifiers.FCM_TOKEN,
-    );
-
-    await LocalStorage.ClearStorage();
     const ReduxData = {
       Home: null,
     };
-
-    await LocalStorage.setObjectData(
-      LocalStorage_Identifiers.FCM_TOKEN,
-      fcmToken,
-    );
 
     dispatchAddAPI(ReduxData);
 

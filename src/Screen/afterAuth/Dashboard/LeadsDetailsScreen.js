@@ -38,7 +38,7 @@ import {
   useFocusEffect,
 } from '@react-navigation/native';
 import {ScreenIdentifiers} from '../../../routes';
-import GeoLocationModel from '../../../components/GeoLocationModel';
+// import GeoLocationModel from '../../../components/GeoLocationModel';
 import {navigate} from '../../../routes/RootNavigation';
 
 const LeadsDetailsScreen = ({user, authData, route}) => {
@@ -944,12 +944,12 @@ const LeadsDetailsScreen = ({user, authData, route}) => {
           )}
         </View>
       )}
-      <GeoLocationModel
+      {/* <GeoLocationModel
         isModalVisible={isModalVisible}
         closeModal={() => closeModal()}
         data={ApiData}
         onUpdate={onUpdateHandle}
-      />
+      /> */}
     </MainContainer>
   );
 };

@@ -11,7 +11,6 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2222950C7EB218BF73FE9F9E /* libPods-mobileCRM-mobileCRMTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6422E015AB454434B25D58 /* libPods-mobileCRM-mobileCRMTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A76FBA0C60C33FC0EFC8946A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		CE9587CBE22AD3D8C53A4EAD /* libPods-mobileCRM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 809B55E3E6D0CA85741BE238 /* libPods-mobileCRM.a */; };
@@ -43,9 +42,6 @@
 		7ABB22302B296896C9456315 /* Pods-mobileCRM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileCRM.debug.xcconfig"; path = "Target Support Files/Pods-mobileCRM/Pods-mobileCRM.debug.xcconfig"; sourceTree = "<group>"; };
 		809B55E3E6D0CA85741BE238 /* libPods-mobileCRM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileCRM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mobileCRM/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A2EA4A74813A84F444F00B17 /* Pods-mobileCRM-mobileCRMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileCRM-mobileCRMTests.debug.xcconfig"; path = "Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests.debug.xcconfig"; sourceTree = "<group>"; };
-		CB6422E015AB454434B25D58 /* libPods-mobileCRM-mobileCRMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileCRM-mobileCRMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2726A1863789EE9818072D3 /* Pods-mobileCRM-mobileCRMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileCRM-mobileCRMTests.release.xcconfig"; path = "Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests.release.xcconfig"; sourceTree = "<group>"; };
 		DD3FAE322E27999000106DFB /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -55,7 +51,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2222950C7EB218BF73FE9F9E /* libPods-mobileCRM-mobileCRMTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +101,6 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				809B55E3E6D0CA85741BE238 /* libPods-mobileCRM.a */,
-				CB6422E015AB454434B25D58 /* libPods-mobileCRM-mobileCRMTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,8 +142,6 @@
 			children = (
 				7ABB22302B296896C9456315 /* Pods-mobileCRM.debug.xcconfig */,
 				34731E7A26E577A6A41C0A4E /* Pods-mobileCRM.release.xcconfig */,
-				A2EA4A74813A84F444F00B17 /* Pods-mobileCRM-mobileCRMTests.debug.xcconfig */,
-				D2726A1863789EE9818072D3 /* Pods-mobileCRM-mobileCRMTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -161,12 +153,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "mobileCRMTests" */;
 			buildPhases = (
-				7253457AFA2E04B27286DF1F /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				A127EACD917B97CE1A0CCB97 /* [CP] Embed Pods Frameworks */,
-				47FD80A105FF6ADC430AC344 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -295,49 +284,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		47FD80A105FF6ADC430AC344 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7253457AFA2E04B27286DF1F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-mobileCRM-mobileCRMTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8794941873257C080BB1549A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -346,38 +292,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM/Pods-mobileCRM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM/Pods-mobileCRM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			outputPaths = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mobileCRM/Pods-mobileCRM-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A127EACD917B97CE1A0CCB97 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mobileCRM-mobileCRMTests/Pods-mobileCRM-mobileCRMTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E2DD29DB7A6D3562074B9B8A /* [CP] Copy Pods Resources */ = {
@@ -388,13 +309,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM/Pods-mobileCRM-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mobileCRM/Pods-mobileCRM-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -434,7 +351,6 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2EA4A74813A84F444F00B17 /* Pods-mobileCRM-mobileCRMTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -461,7 +377,6 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2726A1863789EE9818072D3 /* Pods-mobileCRM-mobileCRMTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -606,7 +521,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -675,7 +593,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

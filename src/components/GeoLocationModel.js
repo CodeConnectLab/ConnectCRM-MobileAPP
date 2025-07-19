@@ -18,7 +18,7 @@ import { ButtonContainer } from './ButtonContainer';
 import { ImagerHanlde } from '../utils/ImageProvider';
 import { showToast } from './showToast';
 import { requestLocationPermission } from '../utils/Permissions';
-import Geolocation from "react-native-geolocation-service";
+// import Geolocation from "react-native-geolocation-service";
 import ImagePicker from 'react-native-image-crop-picker';
 
 const stateList = {
@@ -64,20 +64,20 @@ const GeoLocationModel = ({ isModalVisible, closeModal, data, onUpdate }) => {
       return;
     }
 
-    Geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        handleInputChange("location", { latitude, longitude })
-      },
-      (error) => {
-        console.log("Error getting location: ", error.message);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 10000,
-      }
-    );
+    // Geolocation.getCurrentPosition(
+    //   (position) => {
+    //     const { latitude, longitude } = position.coords;
+    //     handleInputChange("location", { latitude, longitude })
+    //   },
+    //   (error) => {
+    //     console.log("Error getting location: ", error.message);
+    //   },
+    //   {
+    //     enableHighAccuracy: true,
+    //     timeout: 15000,
+    //     maximumAge: 10000,
+    //   }
+    // );
   };
 
   const uploadFile = async () => {

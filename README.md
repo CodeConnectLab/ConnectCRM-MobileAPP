@@ -8,6 +8,13 @@ cd android
 
 ./gradlew assembleDebug
 
+## POD remove and install command:
+
+rm -rf ios/Pods ios/Podfile.lock
+cd ios
+pod install --repo-update
+cd ..
+
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 

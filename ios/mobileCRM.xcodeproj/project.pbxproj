@@ -414,9 +414,10 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UWU52XN4A5;
+				DEVELOPMENT_TEAM = 69WV8X3SB4;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = mobileCRM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Redkaizen CRM";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -428,8 +429,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.mobileCRMcodeconnect;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.redkaizencrm;
 				PRODUCT_NAME = mobileCRM;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -445,8 +445,9 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UWU52XN4A5;
+				DEVELOPMENT_TEAM = 69WV8X3SB4;
 				INFOPLIST_FILE = mobileCRM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Redkaizen CRM";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -458,8 +459,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.mobileCRMcodeconnect;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.redkaizencrm;
 				PRODUCT_NAME = mobileCRM;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -536,6 +536,8 @@
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
 				OTHER_LDFLAGS = "$(inherited)  ";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DWARF_DSYM_FOLDER_PATH = "$(CONFIGURATION_BUILD_DIR)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -605,6 +607,8 @@
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
 				OTHER_LDFLAGS = "$(inherited)  ";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DWARF_DSYM_FOLDER_PATH = "$(CONFIGURATION_BUILD_DIR)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

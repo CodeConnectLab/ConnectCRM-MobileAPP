@@ -1,0 +1,2 @@
+export const ADD_APIDATA = "ADD_APIDATA";
+export const REMOVE_APIDATA = "REMOVE_APIDATA";

@@ -51,7 +51,7 @@ export const ScreenIdentifiers = {
   UpdateCompany: 'UpdateCompany',
   CallReportScreen: 'Call Report',
   ImageViewScreen: 'ImageViewScreen',
-  Outsourcedlead: 'Out sourced',
+  Outsourcedlead: 'New Leads',
   DepartmentScreen: 'DepartmentScreen',
   DepartmentDetails: 'DepartmentDetails',
   ProductService: 'ProductService',

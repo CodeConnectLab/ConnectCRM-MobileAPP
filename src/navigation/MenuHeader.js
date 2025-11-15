@@ -44,28 +44,28 @@ const MenuHeader = ({ user, authData }) => {
         },
         {
           id: 2,
-          title: "All Lead's",
+          title: "All Leads",
           ScreenName: ScreenIdentifiers.AllLeadsScreen,
           icon: ImagerHanlde.MenuNav.layers,
           type: "Home"
         },
         {
           id: 3,
-          title: "Followup's",
+          title: "Followups",
           ScreenName: ScreenIdentifiers.FollowupScreen,
           icon: ImagerHanlde.MenuNav.layers,
           type: "Home"
         },
         {
           id: 4,
-          title: "Imported Lead's",
+          title: "Imported Leads",
           ScreenName: ScreenIdentifiers.ImportedLead,
           icon: ImagerHanlde.MenuNav.layers,
           type: "Menu"
         },
         {
           id: 4,
-          title: "Out Sourced",
+          title: "New Leads",
           ScreenName: ScreenIdentifiers.Outsourcedlead,
           icon: ImagerHanlde.MenuNav.layers,
           type: "Home"

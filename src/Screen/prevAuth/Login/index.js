@@ -11,6 +11,9 @@ import {
   TextInput,
   Keyboard,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import MainContainer from '../../../components/MainContainer';
@@ -143,7 +146,8 @@ const LoginScreen = ({ user, authData }) => {
       )}
 
       {
-        !loading && <View
+        !loading && <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{
             width: '100%',
             backgroundColor: COLORS.lightWhite,
@@ -151,15 +155,21 @@ const LoginScreen = ({ user, authData }) => {
             bottom: 0,
             borderTopRightRadius: 50,
             position: 'absolute',
-            paddingVertical: 40,
-            paddingHorizontal: 30,
-            paddingTop: 20,
             shadowColor: COLORS.White,
             elevation: 5,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2,
             shadowRadius: 4,
           }}>
+          <ScrollView
+            contentContainerStyle={{
+              paddingVertical: 40,
+              paddingHorizontal: 30,
+              paddingTop: 20,
+              flexGrow: 1,
+            }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1 }}>
             <Image
               source={ImagerHanlde.clientLogo}
@@ -286,7 +296,8 @@ const LoginScreen = ({ user, authData }) => {
           </View>
 
           {!isKeyboardVisible && VersionView()}
-        </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       }
 
 

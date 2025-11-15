@@ -18,11 +18,12 @@ import {
   Dimensions,
   Pressable,
   Platform,
+  BackHandler,
 } from 'react-native';
 import {COLORS} from '../../../styles/themes';
 import FloatingButton from '../../../components/FloatingButton';
 import {ScreenIdentifiers} from '../../../routes';
-import {useNavigation, CommonActions} from '@react-navigation/native';
+import {useNavigation, CommonActions, useFocusEffect} from '@react-navigation/native';
 import {ImagerHanlde} from '../../../utils/ImageProvider';
 import ProgressBar from '../../../components/ProgressBar';
 // import {LineChart, Grid, YAxis, XAxis} from 'react-native-svg-charts';
@@ -59,6 +60,19 @@ const Home = ({user, authData, apiData}) => {
     getApiData();
     getNotification();
   }, []);
+
+  // Handle back button to minimize app when on Home screen
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => subscription.remove();
+    }, []),
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

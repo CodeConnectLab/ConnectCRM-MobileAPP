@@ -1001,7 +1001,7 @@ const Home = ({user, authData, apiData}) => {
   };
 
   return (
-    <MainContainer paddingTop={0}>
+    <MainContainer paddingTop={0} disableBackHandler={true}>
       {isLoading && (
         <View
           style={{

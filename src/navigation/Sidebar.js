@@ -28,6 +28,13 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
             IsVisable: false,
             sublist: [
                 {
+                    id: 5,
+                    title: "New Leads",
+                    ScreenName: ScreenIdentifiers.Outsourcedlead,
+                    icon: ImagerHanlde.listIcon,
+                    type: "Home"
+                },
+                {
                     id: 1,
                     title: "Add Lead",
                     icon: ImagerHanlde.BottomNav.add_user,
@@ -55,13 +62,6 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
                     icon: ImagerHanlde.BottomNav.imported_lead,
                     type: "Menu"
                 },
-                {
-                    id: 4,
-                    title: "New Leads",
-                    ScreenName: ScreenIdentifiers.Outsourcedlead,
-                    icon: ImagerHanlde.listIcon,
-                    type: "Home"
-                }
             ]
         },
         {

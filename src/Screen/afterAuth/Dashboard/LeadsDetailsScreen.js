@@ -182,6 +182,17 @@ const LeadsDetailsScreen = ({user, authData, route}) => {
             {ApiData?.lead?.description || 'No description available'}
           </Text>
         </View>
+        <View style={{flexDirection: 'col', gap: 10, marginTop: 10}}>
+          <Text style={{fontSize: 14, color: COLORS.Black, fontWeight: '500'}}>
+            City: {ApiData?.lead?.city || ''}
+          </Text>
+          <Text style={{fontSize: 14, color: COLORS.Black, fontWeight: '500'}}>
+            Campaign: {ApiData?.lead?.campaignName || ''}
+          </Text>
+          <Text style={{fontSize: 14, color: COLORS.Black, fontWeight: '500'}}>
+            Alternate Number: {ApiData?.lead?.alternatePhone || ''}
+          </Text>
+        </View>
       </View>
     );
   };

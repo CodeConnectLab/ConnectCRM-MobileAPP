@@ -297,48 +297,81 @@ export const LeadContainer = ({
                 style={styles.profileBgImage}
               />
             </View>
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: '400',
-                color: COLORS.Black,
-              }}>
-              {name && name?.length > 2 ? name?.slice(0, 10) : 'Unknown'}
-              {name?.length > 10 && '...'}
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '400',
-                color: COLORS.Blue,
-                flex: 1,
-              }}>
-              {item?.leadStatus?.name
-                ? `(${item?.leadStatus?.name || ''})`
-                : ''}
-            </Text>
-            {selectedItems?.length === 0 && (
-              <Pressable
-                onPress={() => handleQuickEdit(item)}
+            {isOverdue(item?.followUpDate) && (
+              <View
                 style={{
-                  marginRight: 10,
-                  width: 70,
-                  height: 25,
-                  backgroundColor: COLORS.Blue,
-                  borderRadius: 5,
+                  backgroundColor: COLORS.Red,
+                  paddingHorizontal: 6,
+                  paddingVertical: 2,
+                  borderRadius: 4,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 10,
+                    fontWeight: '600',
+                    color: COLORS.White,
+                  }}>
+                  Overdue
+                </Text>
+              </View>
+            )}
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                gap: 10,
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: '400',
+                  color: COLORS.Black,
+                }}>
+                {name && name?.length > 2 ? name?.slice(0, 10) : 'Unknown'}
+                {name?.length > 10 && '...'}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  flex: 1,
+                  gap: 6,
                 }}>
                 <Text
                   style={{
                     fontSize: 12,
-                    color: COLORS.White,
-                    fontWeight: '600',
+                    fontWeight: '400',
+                    color: COLORS.Blue,
                   }}>
-                  {'Quick Edit'}
+                  {item?.leadStatus?.name
+                    ? `(${item?.leadStatus?.name || ''})`
+                    : ''}
                 </Text>
-              </Pressable>
-            )}
+              </View>
+              {selectedItems?.length === 0 && (
+                <Pressable
+                  onPress={() => handleQuickEdit(item)}
+                  style={{
+                    marginRight: 10,
+                    width: 70,
+                    height: 25,
+                    backgroundColor: COLORS.Blue,
+                    borderRadius: 5,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: COLORS.White,
+                      fontWeight: '600',
+                    }}>
+                    {'Quick Edit'}
+                  </Text>
+                </Pressable>
+              )}
+            </View>
           </View>
 
           <View
@@ -397,7 +430,9 @@ export const LeadContainer = ({
                   resizeMode="contain"
                   style={styles.itemIcon}
                 />
-                <Text style={styles.itemSubText}>{item?.productService?.name || ''}</Text>
+                <Text style={styles.itemSubText}>
+                  {item?.productService?.name || ''}
+                </Text>
               </View>
             )}
             {/* {item?.city && (
@@ -621,6 +656,16 @@ export const LeadContainer = ({
         ),
     );
     return uniqueItems;
+  };
+
+  const isOverdue = followUpDate => {
+    if (!followUpDate) return false;
+
+    const followUp = new Date(followUpDate);
+    const now = new Date();
+
+    // Overdue if followUp is before right now
+    return followUp < now;
   };
 
   const handleInputChange = (field, value) => {

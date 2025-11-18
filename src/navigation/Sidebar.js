@@ -36,28 +36,28 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
                 },
                 {
                     id: 2,
-                    title: "All Lead's",
+                    title: "All Leads",
                     ScreenName: ScreenIdentifiers.AllLeadsScreen,
                     icon: ImagerHanlde.MenuNav.clients,
                     type: "Home"
                 },
                 {
                     id: 3,
-                    title: "Followup's",
+                    title: "Followup Leads",
                     ScreenName: ScreenIdentifiers.FollowupScreen,
                     icon: ImagerHanlde.MenuNav.layers,
                     type: "Home"
                 },
                 {
                     id: 4,
-                    title: "Imported Lead's",
+                    title: "Imported Leads",
                     ScreenName: ScreenIdentifiers.ImportedLead,
                     icon: ImagerHanlde.BottomNav.imported_lead,
                     type: "Menu"
                 },
                 {
                     id: 4,
-                    title: "Out Sourced",
+                    title: "New Leads",
                     ScreenName: ScreenIdentifiers.Outsourcedlead,
                     icon: ImagerHanlde.listIcon,
                     type: "Home"

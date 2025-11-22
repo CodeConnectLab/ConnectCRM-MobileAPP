@@ -1,5 +1,5 @@
 import {Platform} from 'react-native';
-const androidVersion = 'v1.0.1';
+const androidVersion = 'v2.0.2';
 const iosVersion = 'v1.0.0';
 const CurrentYear = new Date().getFullYear();
 

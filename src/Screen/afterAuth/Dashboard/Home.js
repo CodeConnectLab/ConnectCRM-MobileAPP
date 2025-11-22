@@ -133,7 +133,7 @@ const Home = ({user, authData, apiData}) => {
 
             if (version !== AppVersion?.version) {
               setUpdateDetails({
-                status: true,
+                status: false,
                 details: {
                   version: res?.data?.data?.androidVersion,
                   link: res?.data?.data?.mobileApkDownlodeLink,

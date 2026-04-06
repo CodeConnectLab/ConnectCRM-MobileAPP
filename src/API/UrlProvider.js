@@ -2,6 +2,8 @@
 
 const TEST_URL = 'https://api.codeconnect.in/api/v1/';
 const LIVE_URL = 'https://api.codeconnect.in/api/v1/';
+// const TEST_URL = 'http://13.200.34.99:9000/api/v1/';
+// const LIVE_URL = 'http://13.200.34.99:9000/api/v1/';
 const TEST_URL1 = 'https://f067-45-118-156-30.ngrok-free.app/api/v1/';
 
 export const isProduction = false;

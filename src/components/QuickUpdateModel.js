@@ -97,6 +97,12 @@ const QuickUpdateModel = ({
     setFormState(prev => ({...prev, [field]: value}));
   };
 
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow;
+  };
+
   const renderDropdown = (data, placeholder, value, field) => (
     <Dropdown
       style={[styles.dropdown, focusStates[field] && {borderColor: 'gray'}]}
@@ -173,8 +179,6 @@ const QuickUpdateModel = ({
         formState?.leadWonAmount === null
       ) {
         showToast('Please enter Won amount');
-      } else if (formState.datetime === null) {
-        showToast('Please enter the date and time');
       } else if (formState.comment === '') {
         showToast('Please enter the comment.');
       } else {
@@ -185,9 +189,10 @@ const QuickUpdateModel = ({
   };
 
   const UpdateHandler = () => {
+    const followUpDate = formState?.datetime ?? getTomorrowDate();
     const body = {
       leadStatus: formState?.status?.Id || '',
-      followUpDate: formState?.datetime + '' || '',
+      followUpDate: followUpDate + '' || '',
       comment: formState?.comment || '',
       leadCost: formState?.leadCost ? parseInt(formState?.leadCost) : 0,
       addCalender: focusStates?.calenderStatus,

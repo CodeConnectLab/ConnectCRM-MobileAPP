@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable no-undef */
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,20 +13,16 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   TextInput,
-  Linking,
-  Platform,
 } from 'react-native';
 import {COLORS} from '../styles/themes';
 import {Dropdown} from 'react-native-element-dropdown';
-import {focusList, staticData} from '../utils/staticData';
+import {focusList} from '../utils/staticData';
 import {ImagerHanlde} from '../utils/ImageProvider';
-import {ButtonContainer} from '../components/ButtonContainer';
 import {API} from '../API';
 import {END_POINT} from '../API/UrlProvider';
-import {useNavigation, CommonActions} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {formatCreatedAt, openDialer, openWhatsApp} from '../utils';
 import {ScreenIdentifiers} from '../routes';
-import {showToast} from './showToast';
 import SkeletonLoader from './SkeletonLoader';
 import ReportFilterModel from './ReportFilterModel';
 import FloatingButton from './FloatingButton';
@@ -306,6 +300,24 @@ export const LeadContainer = ({
               {name && name?.length > 2 ? name?.slice(0, 10) : 'Unknown'}
               {name?.length > 10 && '...'}
             </Text>
+            {isOverdue(item?.followUpDate) && (
+              <View
+                style={{
+                  backgroundColor: COLORS.Red,
+                  paddingHorizontal: 6,
+                  paddingVertical: 2,
+                  borderRadius: 4,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 10,
+                    fontWeight: '600',
+                    color: COLORS.White,
+                  }}>
+                  Overdue
+                </Text>
+              </View>
+            )}
             <Text
               style={{
                 fontSize: 12,
@@ -621,6 +633,15 @@ export const LeadContainer = ({
         ),
     );
     return uniqueItems;
+  };
+
+  const isOverdue = followUpDate => {
+    if (!followUpDate) {
+      return false;
+    }
+    const followUp = new Date(followUpDate);
+    const now = new Date();
+    return followUp < now;
   };
 
   const handleInputChange = (field, value) => {

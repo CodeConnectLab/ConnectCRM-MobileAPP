@@ -142,6 +142,12 @@ const AddLeadScreen = ({user, authData, route}) => {
     setFormState(prev => ({...prev, [field]: value}));
   };
 
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow;
+  };
+
   const renderDropdown = (data, placeholder, value, field) => (
     <Dropdown
       style={[styles.dropdown, focusStates[field] && {borderColor: 'gray'}]}
@@ -544,8 +550,6 @@ const AddLeadScreen = ({user, authData, route}) => {
       formState?.leadWonAmount === null
     ) {
       showToast('Please enter Won amount');
-    } else if (formState.datetime === null) {
-      showToast('Please enter the date and time');
     } else if (formState.description === '') {
       showToast('Please enter the description.');
     } else if (route.params?.screenType === 'Update Details' && formState.comment === '') {
@@ -564,6 +568,7 @@ const AddLeadScreen = ({user, authData, route}) => {
   };
 
   const uploadDate = type => {
+    const followUpDate = formState?.datetime ?? getTomorrowDate();
     const body = {
       firstName: formState?.fullName || '',
       lastName: '',
@@ -573,7 +578,7 @@ const AddLeadScreen = ({user, authData, route}) => {
       ...(formState?.service.Id && {productService: formState?.service.Id}),
       ...(formState?.agent.Id && {assignedAgent: formState?.agent.Id}),
       ...(formState?.status.Id && {leadStatus: formState?.status.Id}),
-      followUpDate: formState?.datetime + '' || '',
+      followUpDate: followUpDate + '' || '',
       description: formState?.description || '',
       ...(route.params?.screenType === 'Update Details' && {
         comment: formState?.comment || '',

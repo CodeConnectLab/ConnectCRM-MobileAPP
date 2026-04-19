@@ -1,5 +1,5 @@
-import { View, StyleSheet, Platform, Dimensions, Text, TouchableOpacity, ScrollView, RefreshControl, Image, Pressable } from "react-native"
-import { COLORS, AppThemes } from '../styles/themes';
+import { View, StyleSheet, Dimensions, Text, ScrollView, RefreshControl, Image, Pressable } from "react-native"
+import { COLORS } from '../styles/themes';
 import { useState } from "react";
 import { ImagerHanlde } from "../utils/ImageProvider";
 import { ScreenIdentifiers } from "../routes";
@@ -36,27 +36,27 @@ const Sidebar = ({ user, onClose, onUpdate, refreshing = false, onRefresh, navig
                 },
                 {
                     id: 2,
-                    title: "All Lead's",
+                    title: 'All Leads',
                     ScreenName: ScreenIdentifiers.AllLeadsScreen,
                     icon: ImagerHanlde.MenuNav.clients,
                     type: "Home"
                 },
                 {
                     id: 3,
-                    title: "Followup's",
+                    title: 'Followup Leads',
                     ScreenName: ScreenIdentifiers.FollowupScreen,
                     icon: ImagerHanlde.MenuNav.layers,
                     type: "Home"
                 },
                 {
                     id: 4,
-                    title: "Imported Lead's",
+                    title: 'Imported Leads',
                     ScreenName: ScreenIdentifiers.ImportedLead,
                     icon: ImagerHanlde.BottomNav.imported_lead,
                     type: "Menu"
                 },
                 {
-                    id: 4,
+                    id: 5,
                     title: "Out Sourced",
                     ScreenName: ScreenIdentifiers.Outsourcedlead,
                     icon: ImagerHanlde.listIcon,

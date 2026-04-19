@@ -1,7 +1,5 @@
-/* eslint-disable quotes */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
@@ -18,24 +16,21 @@ import {
   Dimensions,
   Pressable,
   Platform,
+  BackHandler,
 } from 'react-native';
 import {COLORS} from '../../../styles/themes';
 import FloatingButton from '../../../components/FloatingButton';
 import {ScreenIdentifiers} from '../../../routes';
-import {useNavigation, CommonActions} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {ImagerHanlde} from '../../../utils/ImageProvider';
 import ProgressBar from '../../../components/ProgressBar';
 // import {LineChart, Grid, YAxis, XAxis} from 'react-native-svg-charts';
 import {PieChart} from 'react-native-svg-charts';
-import {Defs, LinearGradient, Stop} from 'react-native-svg';
-import BarChartGraph from '../../../components/BarChartGraph';
 import {API} from '../../../API';
 import {END_POINT} from '../../../API/UrlProvider';
 import {LineChart} from 'react-native-chart-kit';
 import {AppVersion, pieData} from '../../../utils/staticData';
-import {G} from 'react-native-svg';
 import {dispatchAddAPI} from '../../../redux/actionDispatchers/Api-dispatchers';
-import {ButtonContainer} from '../../../components/ButtonContainer';
 import UpdateModel from '../../../components/UpdateModel';
 const Home = ({user, authData, apiData}) => {
   const navigation = useNavigation();
@@ -59,6 +54,20 @@ const Home = ({user, authData, apiData}) => {
     getApiData();
     getNotification();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+      return () => subscription.remove();
+    }, []),
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -987,7 +996,7 @@ const Home = ({user, authData, apiData}) => {
   };
 
   return (
-    <MainContainer paddingTop={0}>
+    <MainContainer paddingTop={0} disableBackHandler={true}>
       {isLoading && (
         <View
           style={{

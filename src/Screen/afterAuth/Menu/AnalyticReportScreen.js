@@ -365,7 +365,9 @@ const AnalyticReportScreen = ({user, authData}) => {
         <FlatList
           data={ApiDate?.leads || []}
           renderItem={renderItem}
-          keyExtractor={item => item.srNo.toString()}
+          keyExtractor={(item, index) =>
+            `${item?.srNo ?? 'row'}-${index}`
+          }
           style={{flex: 1, width: '100%'}}
           contentContainerStyle={{
             gap: 0,
@@ -550,7 +552,9 @@ const AnalyticReportScreen = ({user, authData}) => {
         <FlatList
           data={CallReportData || []}
           renderItem={renderCallItem}
-          keyExtractor={item => item?.clientName?.toString()}
+          keyExtractor={(item, index) =>
+            `${item?.clientName ?? 'call'}-${item?.mobileNo ?? ''}-${index}`
+          }
           style={{flex: 1, width: '100%'}}
           contentContainerStyle={{
             gap: 0,

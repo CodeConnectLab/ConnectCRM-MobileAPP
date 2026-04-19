@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import MainContainer from '../components/MainContainer';
 import {
@@ -9,7 +9,6 @@ import {
   StyleSheet,
   Text,
   Pressable,
-  FlatList,
   RefreshControl,
   ScrollView,
 } from 'react-native';
@@ -20,7 +19,7 @@ import { navigate } from '../routes/RootNavigation';
 import { API } from '../API';
 import { END_POINT } from '../API/UrlProvider';
 import { dispatchAddUser } from '../redux/actionDispatchers/user-dispatchers';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { VersionView } from '../utils';
 
 const MenuHeader = ({ user, authData }) => {
@@ -44,21 +43,21 @@ const MenuHeader = ({ user, authData }) => {
         },
         {
           id: 2,
-          title: "All Lead's",
+          title: 'All Leads',
           ScreenName: ScreenIdentifiers.AllLeadsScreen,
           icon: ImagerHanlde.MenuNav.layers,
           type: "Home"
         },
         {
           id: 3,
-          title: "Followup's",
+          title: 'Followups',
           ScreenName: ScreenIdentifiers.FollowupScreen,
           icon: ImagerHanlde.MenuNav.layers,
           type: "Home"
         },
         {
           id: 4,
-          title: "Imported Lead's",
+          title: 'Imported Leads',
           ScreenName: ScreenIdentifiers.ImportedLead,
           icon: ImagerHanlde.MenuNav.layers,
           type: "Menu"

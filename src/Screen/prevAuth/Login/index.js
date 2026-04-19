@@ -1,6 +1,5 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import {
   View,
@@ -11,12 +10,14 @@ import {
   TextInput,
   Keyboard,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import MainContainer from '../../../components/MainContainer';
 import { ImagerHanlde } from '../../../utils/ImageProvider';
 import { COLORS } from '../../../styles/themes';
-import { ButtonContainer } from '../../../components/ButtonContainer';
 import { validateEmail, VersionView } from '../../../utils';
 import { showToast } from '../../../components/showToast';
 import { API } from '../../../API';
@@ -142,8 +143,8 @@ const LoginScreen = ({ user, authData }) => {
         </View>
       )}
 
-      {
-        !loading && <View
+      {!loading && (
+        <View
           style={{
             width: '100%',
             backgroundColor: COLORS.lightWhite,
@@ -151,144 +152,154 @@ const LoginScreen = ({ user, authData }) => {
             bottom: 0,
             borderTopRightRadius: 50,
             position: 'absolute',
-            paddingVertical: 40,
-            paddingHorizontal: 30,
-            paddingTop: 20,
             shadowColor: COLORS.White,
             elevation: 5,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2,
             shadowRadius: 4,
           }}>
-          <View style={{ flex: 1 }}>
-            <Image
-              source={ImagerHanlde.logo}
-              resizeMode="contain"
-              style={styles.logo}
-            />
-            <Text style={styles.title}>Log In Now</Text>
-            <Text style={styles.subtitle}>
-              please login to continue using our app
-            </Text>
-
-            <Text
-              style={{
-                fontSize: 16,
-                color: COLORS.Black,
-                fontWeight: '600',
-                marginTop: 50,
-              }}>
-              {'Email Address'}
-            </Text>
-            <View
-              style={{
-                ...styles.Input,
-                alignItems: 'center',
-                flexDirection: 'row',
-                gap: 10,
-              }}>
-              <Image
-                source={ImagerHanlde.profile.mail}
-                resizeMode="contain"
-                style={{ width: 20, height: 20, tintColor: COLORS.Black }}
-              />
-
-              <TextInput
-                secureTextEntry={false}
-                keyboardType="email-address"
-                placeholder={'Enter email address'}
-                placeholderTextColor={COLORS.DarkGray}
-                maxLength={100}
-                value={EmailInput}
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: COLORS.Black,
-                  flex: 1,
-                }}
-                onChangeText={value => setEmailInput(value)}
-              />
-            </View>
-            <Text
-              style={{
-                fontSize: 16,
-                color: COLORS.Black,
-                fontWeight: '600',
-                marginTop: 10,
-              }}>
-              {'Password'}
-            </Text>
-            <View
-              style={{
-                ...styles.Input,
-                alignItems: 'center',
-                flexDirection: 'row',
-                gap: 10,
-                marginTop: 10,
-              }}>
-              <Image
-                source={ImagerHanlde.lock_closed}
-                resizeMode="contain"
-                style={{ width: 20, height: 20, tintColor: COLORS.Black }}
-              />
-
-              <TextInput
-                secureTextEntry={IsVisable ? false : true}
-                keyboardType="default"
-                placeholder={'Enter Password'}
-                placeholderTextColor={COLORS.DarkGray}
-                maxLength={100}
-                value={PasswordInput}
-                onChangeText={value => setPasswordInput(value)}
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: COLORS.Black,
-                  flex: 1,
-                }}
-              />
-              <Pressable onPress={() => setIsVisable((res) => !res)} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: "center" }}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}>
+            <ScrollView
+              contentContainerStyle={{
+                paddingVertical: 40,
+                paddingHorizontal: 30,
+                paddingTop: 20,
+                flexGrow: 1,
+              }}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}>
+              <View>
                 <Image
-                  source={!IsVisable ? ImagerHanlde.eye_off_outline : ImagerHanlde.eye_outline}
+                  source={ImagerHanlde.logo}
                   resizeMode="contain"
-                  style={{ width: 20, height: 20, tintColor: COLORS.Black }}
+                  style={styles.logo}
                 />
-              </Pressable>
+                <Text style={styles.title}>Log In Now</Text>
+                <Text style={styles.subtitle}>
+                  please login to continue using our app
+                </Text>
 
-            </View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: COLORS.Black,
+                    fontWeight: '600',
+                    marginTop: 50,
+                  }}>
+                  {'Email Address'}
+                </Text>
+                <View
+                  style={{
+                    ...styles.Input,
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    gap: 10,
+                  }}>
+                  <Image
+                    source={ImagerHanlde.profile.mail}
+                    resizeMode="contain"
+                    style={{ width: 20, height: 20, tintColor: COLORS.Black }}
+                  />
 
-            <Pressable
-              onPress={() =>
-                navigation.navigate(ScreenIdentifiers.ForgotPassword)
-              }>
-              <Text style={styles.forgot}>{'Forgot password?'}</Text>
-            </Pressable>
+                  <TextInput
+                    secureTextEntry={false}
+                    keyboardType="email-address"
+                    placeholder={'Enter email address'}
+                    placeholderTextColor={COLORS.DarkGray}
+                    maxLength={100}
+                    value={EmailInput}
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: COLORS.Black,
+                      flex: 1,
+                    }}
+                    onChangeText={value => setEmailInput(value)}
+                  />
+                </View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: COLORS.Black,
+                    fontWeight: '600',
+                    marginTop: 10,
+                  }}>
+                  {'Password'}
+                </Text>
+                <View
+                  style={{
+                    ...styles.Input,
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    gap: 10,
+                    marginTop: 10,
+                  }}>
+                  <Image
+                    source={ImagerHanlde.lock_closed}
+                    resizeMode="contain"
+                    style={{ width: 20, height: 20, tintColor: COLORS.Black }}
+                  />
 
-            <Pressable
-              onPress={() => handleLogin()}
-              style={{
-                width: '60%',
-                height: 50,
-                backgroundColor: COLORS.Blue,
-                marginTop: 50,
-                marginBottom: 80,
-                alignSelf: 'center',
-                borderTopLeftRadius: 30,
-                borderBottomRightRadius: 15,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{ fontSize: 20, fontWeight: '700', color: COLORS.White }}>
-                {'Sign in'}
-              </Text>
-            </Pressable>
-          </View>
+                  <TextInput
+                    secureTextEntry={IsVisable ? false : true}
+                    keyboardType="default"
+                    placeholder={'Enter Password'}
+                    placeholderTextColor={COLORS.DarkGray}
+                    maxLength={100}
+                    value={PasswordInput}
+                    onChangeText={value => setPasswordInput(value)}
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: COLORS.Black,
+                      flex: 1,
+                    }}
+                  />
+                  <Pressable onPress={() => setIsVisable((res) => !res)} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: "center" }}>
+                    <Image
+                      source={!IsVisable ? ImagerHanlde.eye_off_outline : ImagerHanlde.eye_outline}
+                      resizeMode="contain"
+                      style={{ width: 20, height: 20, tintColor: COLORS.Black }}
+                    />
+                  </Pressable>
 
-          {!isKeyboardVisible && VersionView()}
+                </View>
+
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate(ScreenIdentifiers.ForgotPassword)
+                  }>
+                  <Text style={styles.forgot}>{'Forgot password?'}</Text>
+                </Pressable>
+
+                <Pressable
+                  onPress={() => handleLogin()}
+                  style={{
+                    width: '60%',
+                    height: 50,
+                    backgroundColor: COLORS.Blue,
+                    marginTop: 50,
+                    marginBottom: 80,
+                    alignSelf: 'center',
+                    borderTopLeftRadius: 30,
+                    borderBottomRightRadius: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: '700', color: COLORS.White }}>
+                    {'Sign in'}
+                  </Text>
+                </Pressable>
+              </View>
+
+              {!isKeyboardVisible && VersionView()}
+            </ScrollView>
+          </KeyboardAvoidingView>
         </View>
-      }
-
+      )}
 
     </MainContainer>
   );

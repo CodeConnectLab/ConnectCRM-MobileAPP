@@ -27,6 +27,7 @@ const MainContainer = ({
     zIndex: 1,
     tintColor: tintColor,
   },
+  disableBackHandler = false,
 }) => {
   const navigation = useNavigation();
 
@@ -40,7 +41,12 @@ const MainContainer = ({
     return true;
   };
 
-  useBackHandler(onhardwareBack);
+  useBackHandler(() => {
+    if (disableBackHandler) {
+      return false;
+    }
+    return onhardwareBack();
+  });
 
   const UiType = () => {
     switch (screenType) {

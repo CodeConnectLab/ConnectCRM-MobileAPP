@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, StyleSheet, NativeModules, Platform } from 'react-native';
+import {
+  Image,
+  View,
+  StyleSheet,
+  NativeModules,
+  Platform,
+  PermissionsAndroid,
+} from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackgroundActions from 'react-native-background-actions';
@@ -32,7 +39,33 @@ const taskOptions = {
   batchSize: 500 // Number of logs to fetch at once
 };
 
-const SplashScreen = ({ authData, permissionsHandled = false }) => {
+/** If callLogPermissionGranted is false, skip background sync; undefined preserves legacy behavior. */
+function shouldStartCallLogBackgroundSync(permissionsHandled, callLogPermissionGranted) {
+  if (!permissionsHandled || Platform.OS !== 'android') {
+    return false;
+  }
+  if (callLogPermissionGranted === false) {
+    return false;
+  }
+  return true;
+}
+
+function isCallLogPermissionError(error) {
+  const msg = String(error?.message ?? error ?? '');
+  return (
+    msg.includes('SecurityException') ||
+    msg.includes('READ_CALL_LOG') ||
+    msg.includes('WRITE_CALL_LOG') ||
+    msg.includes('Permission Denial') ||
+    msg.includes('CallLogProvider')
+  );
+}
+
+const SplashScreen = ({
+  authData,
+  permissionsHandled = false,
+  callLogPermissionGranted,
+}) => {
   const navigation = useNavigation();
   const sessionId = authData?.sessionId;
   const [isInitialized, setIsInitialized] = useState(false);
@@ -41,8 +74,9 @@ const SplashScreen = ({ authData, permissionsHandled = false }) => {
     console.log('SplashScreen mounted, sessionId:', sessionId);
     console.log('permissionsHandled:', permissionsHandled);
     
-    // Only start background tasks if permissions have been handled
-    if (permissionsHandled && Platform.OS === 'android') {
+    if (
+      shouldStartCallLogBackgroundSync(permissionsHandled, callLogPermissionGranted)
+    ) {
       initializeBackgroundTasks();
     }
     
@@ -52,7 +86,7 @@ const SplashScreen = ({ authData, permissionsHandled = false }) => {
     return () => {
       console.log('SplashScreen unmounting');
     };
-  }, [permissionsHandled]); // Re-run when permissionsHandled changes
+  }, [permissionsHandled, callLogPermissionGranted]);
 
   // Effect to handle navigation after everything is ready
   useEffect(() => {
@@ -130,14 +164,27 @@ const SplashScreen = ({ authData, permissionsHandled = false }) => {
         
         await sleep(taskData.delay || taskOptions.delay);
       } catch (error) {
-        console.error('Error in background task:', error);
-        await sleep(taskOptions.delay);
+        if (isCallLogPermissionError(error)) {
+          await sleep(taskOptions.delay);
+        } else {
+          console.error('Error in background task:', error);
+          await sleep(taskOptions.delay);
+        }
       }
     }
   };
 
   const uploadCallLogs = async () => {
     try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+        );
+        if (!granted) {
+          return;
+        }
+      }
+
       const storedLogs = JSON.parse(await AsyncStorage.getItem('uploadedLogs')) || [];
       const sessionId = JSON.parse(await AsyncStorage.getItem('sessionId'));
 
@@ -187,6 +234,9 @@ const SplashScreen = ({ authData, permissionsHandled = false }) => {
         }
       );
     } catch (error) {
+      if (isCallLogPermissionError(error)) {
+        return;
+      }
       console.error('Error in uploadCallLogs:', error);
       throw error;
     }

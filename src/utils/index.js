@@ -101,7 +101,7 @@ export const VersionView = (
 export const openWhatsApp = (contactNumber, name) => {
   try {
     let number = contactNumber || '';
-    const message = `Hello ${name || ''}`;
+    const message = `Hi, ${name || ''}`;
 
     if (!number.startsWith('+91')) {
       number = `+91${number}`;

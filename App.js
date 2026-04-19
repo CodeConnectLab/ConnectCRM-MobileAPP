@@ -14,8 +14,11 @@ import CodePush from 'react-native-code-push';
 
 const App = () => {
   const [permissionsHandled, setPermissionsHandled] = useState(false);
+  const [callLogPermissionGranted, setCallLogPermissionGranted] = useState(
+    undefined,
+  );
 
-  useEffect(() => {    
+  useEffect(() => {
     // Request all permissions on first launch
     handleInitialSetup();
   }, []);
@@ -24,10 +27,12 @@ const App = () => {
     // Request all permissions at once
     const permissionResults = await requestAllPermissionsAtOnce();
     console.log('All permission results:', permissionResults);
-    
+
+    setCallLogPermissionGranted(permissionResults.callLog);
+
     // Mark permissions as handled regardless of the result
     setPermissionsHandled(true);
-    
+
     // Set up FCM services
     fcmService.requestUserPermission();
     fcmService.registerAppWithFCM();
@@ -57,7 +62,10 @@ const App = () => {
         backgroundColor="transparent"
         barStyle={'dark-content'}
       />
-      <MainRoute permissionsHandled={permissionsHandled} />
+      <MainRoute
+        permissionsHandled={permissionsHandled}
+        callLogPermissionGranted={callLogPermissionGranted}
+      />
     </Provider>
   );
 };

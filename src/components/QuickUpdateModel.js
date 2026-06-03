@@ -22,7 +22,7 @@ import {ImagerHanlde} from '../utils/ImageProvider';
 import DatePicker from 'react-native-date-picker';
 import {Dropdown} from 'react-native-element-dropdown';
 import {focusList, formList} from '../utils/staticData';
-import {formatCreatedAt} from '../utils';
+import {formatCreatedAt, consumeLastTouchNonce} from '../utils';
 import {showToast} from './showToast';
 import {API} from '../API';
 import {END_POINT} from '../API/UrlProvider';
@@ -188,14 +188,22 @@ const QuickUpdateModel = ({
     }
   };
 
-  const UpdateHandler = () => {
+  const UpdateHandler = async () => {
     const followUpDate = formState?.datetime ?? getTomorrowDate();
+
+    // If the user tapped Call/WhatsApp on this lead in the last 30 min, attach
+    // the nonce so the backend can grade this as a "Verified" engagement
+    // (tap + follow-up by the same employee) instead of "Low confidence".
+    const linkedNonce = await consumeLastTouchNonce(selectData?._id);
+
     const body = {
       leadStatus: formState?.status?.Id || '',
       followUpDate: followUpDate + '' || '',
       comment: formState?.comment || '',
       leadCost: formState?.leadCost ? parseInt(formState?.leadCost) : 0,
       addCalender: focusStates?.calenderStatus,
+      source: 'MOBILE',
+      ...(linkedNonce && {clientNonce: linkedNonce}),
       ...(formState?.status?.wonStatus &&
         formState?.leadWonAmount && {
           leadWonAmount: parseInt(formState?.leadWonAmount) || 0,

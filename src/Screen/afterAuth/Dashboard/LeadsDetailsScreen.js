@@ -30,6 +30,7 @@ import {
   openDialer,
   openEmail,
   openWhatsApp,
+  logLeadTouch,
 } from '../../../utils';
 import {showToast} from '../../../components/showToast';
 import {
@@ -105,7 +106,14 @@ const LeadsDetailsScreen = ({user, authData, route}) => {
           </View>
           {ApiData?.lead?.email && ApiData?.lead?.email !== '' && (
             <Pressable
-              onPress={() => openEmail(ApiData?.lead?.email || '')}
+              onPress={() => {
+                logLeadTouch({
+                  leadId: ApiData?.lead?._id,
+                  channel: 'EMAIL',
+                  sessionId: authData?.sessionId,
+                });
+                openEmail(ApiData?.lead?.email || '');
+              }}
               style={{
                 width: 30,
                 height: 30,
@@ -123,12 +131,17 @@ const LeadsDetailsScreen = ({user, authData, route}) => {
           )}
 
           <Pressable
-            onPress={() =>
+            onPress={() => {
+              logLeadTouch({
+                leadId: ApiData?.lead?._id,
+                channel: 'WHATSAPP',
+                sessionId: authData?.sessionId,
+              });
               openWhatsApp(
                 ApiData?.lead?.contactNumber || '',
                 ApiData?.lead?.firstName || '',
-              )
-            }
+              );
+            }}
             style={{
               width: 30,
               height: 30,
@@ -144,7 +157,14 @@ const LeadsDetailsScreen = ({user, authData, route}) => {
             />
           </Pressable>
           <Pressable
-            onPress={() => openDialer(ApiData?.lead?.contactNumber || '')}
+            onPress={() => {
+              logLeadTouch({
+                leadId: ApiData?.lead?._id,
+                channel: 'CALL',
+                sessionId: authData?.sessionId,
+              });
+              openDialer(ApiData?.lead?.contactNumber || '');
+            }}
             style={{
               width: 30,
               height: 30,

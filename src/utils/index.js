@@ -1,6 +1,9 @@
 import {Text, Dimensions, Platform, Linking} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AppVersion} from './staticData';
 import {showToast} from '../components/showToast';
+import {API} from '../API';
+import {END_POINT} from '../API/UrlProvider';
 
 export const screenWidth = Dimensions.get('window').width;
 
@@ -211,4 +214,135 @@ export const getFirstDateOfCurrentMonth = () => {
   const formattedDate = firstDayOfCurrentMonth.toISOString().split('T')[0];
 
   return formattedDate;
+};
+
+// ============================================================================
+//  Lead-contact tracking
+// ============================================================================
+//
+//  When the employee taps a Call / WhatsApp / Email button, we fire a
+//  fire-and-forget POST to /lead/:id/touch BEFORE the native intent opens.
+//  The backend stores it with a clientNonce so retries / offline-queue flushes
+//  don't double-count. The nonce is also stashed in AsyncStorage keyed by
+//  leadId, so the QuickUpdate popup can include it in the subsequent lead PUT —
+//  that lets the backend grade the engagement as "Verified" (tap + comment by
+//  same user within 30 min) rather than just "Low confidence".
+
+const LEAD_TOUCH_QUEUE_KEY = '@lead_touch_pending_queue';
+const LEAD_TOUCH_NONCE_PREFIX = '@lead_touch_nonce_';
+
+/** RFC4122-ish v4. Good enough as an idempotency key — does not need cryptographic strength. */
+const generateNonce = () => {
+  const hex = '0123456789abcdef';
+  let out = '';
+  for (let i = 0; i < 32; i++) {
+    out += hex[(Math.random() * 16) | 0];
+    if (i === 7 || i === 11 || i === 15 || i === 19) out += '-';
+  }
+  return out;
+};
+
+/** Remember the last touch nonce for a given lead so QuickUpdate can attach it. */
+export const rememberLastTouchNonce = async (leadId, nonce) => {
+  if (!leadId || !nonce) return;
+  try {
+    await AsyncStorage.setItem(
+      LEAD_TOUCH_NONCE_PREFIX + leadId,
+      JSON.stringify({nonce, at: Date.now()}),
+    );
+  } catch (_) {
+    /* non-fatal */
+  }
+};
+
+/** Retrieve the most recent touch nonce for a lead. Returns null if older than 30 min. */
+export const consumeLastTouchNonce = async leadId => {
+  if (!leadId) return null;
+  try {
+    const raw = await AsyncStorage.getItem(LEAD_TOUCH_NONCE_PREFIX + leadId);
+    if (!raw) return null;
+    const {nonce, at} = JSON.parse(raw);
+    if (Date.now() - at > 30 * 60 * 1000) return null;
+    return nonce;
+  } catch (_) {
+    return null;
+  }
+};
+
+/** Persist failed touches so we can replay them when the network returns. */
+const enqueueTouchForRetry = async payload => {
+  try {
+    const raw = await AsyncStorage.getItem(LEAD_TOUCH_QUEUE_KEY);
+    const queue = raw ? JSON.parse(raw) : [];
+    queue.push(payload);
+    // Keep the queue bounded — 100 most-recent are plenty for a phone.
+    const trimmed = queue.slice(-100);
+    await AsyncStorage.setItem(LEAD_TOUCH_QUEUE_KEY, JSON.stringify(trimmed));
+  } catch (_) {
+    /* swallow — touch retry is best-effort */
+  }
+};
+
+/**
+ * Send (or queue) a touch event for a lead.
+ *
+ *   logLeadTouch({ leadId, channel: 'CALL', sessionId: authData.sessionId, firstName })
+ *
+ * Returns the nonce immediately so callers can stash it; the network call is
+ * non-blocking — we don't await it because we want the dialer/WhatsApp to open
+ * instantly.
+ */
+export const logLeadTouch = ({
+  leadId,
+  channel,
+  sessionId,
+  appVersion = AppVersion.version,
+}) => {
+  if (!leadId || !channel) return null;
+  const nonce = generateNonce();
+  const payload = {
+    channel,
+    source: 'MOBILE',
+    intentAt: new Date().toISOString(),
+    clientNonce: nonce,
+    meta: {
+      appVersion: appVersion || '',
+      platform: Platform.OS,
+    },
+  };
+  const endpoint = `${END_POINT.afterAuth.leadTouch}/${leadId}/touch`;
+
+  // Stash nonce so the follow-up QuickUpdate can include it.
+  rememberLastTouchNonce(leadId, nonce);
+
+  API.postAuthAPI(payload, endpoint, sessionId, null, res => {
+    if (!res?.status) {
+      // Network or server hiccup — queue for retry on next app foreground.
+      enqueueTouchForRetry({leadId, payload});
+    }
+  });
+
+  return nonce;
+};
+
+/** Flush any touches that failed to send while offline. Safe to call any time. */
+export const flushPendingLeadTouches = async sessionId => {
+  try {
+    const raw = await AsyncStorage.getItem(LEAD_TOUCH_QUEUE_KEY);
+    if (!raw) return;
+    const queue = JSON.parse(raw);
+    if (!Array.isArray(queue) || queue.length === 0) return;
+
+    // Clear first — if a retry fails we'll re-enqueue from the helper.
+    await AsyncStorage.removeItem(LEAD_TOUCH_QUEUE_KEY);
+
+    queue.forEach(({leadId, payload}) => {
+      const endpoint = `${END_POINT.afterAuth.leadTouch}/${leadId}/touch`;
+      API.postAuthAPI(payload, endpoint, sessionId, null, res => {
+        if (!res?.status) enqueueTouchForRetry({leadId, payload});
+      });
+    });
+  } catch (_) {
+    /* swallow */
+  }
 };

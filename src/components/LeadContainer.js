@@ -21,7 +21,7 @@ import {ImagerHanlde} from '../utils/ImageProvider';
 import {API} from '../API';
 import {END_POINT} from '../API/UrlProvider';
 import {useNavigation} from '@react-navigation/native';
-import {formatCreatedAt, openDialer, openWhatsApp} from '../utils';
+import {formatCreatedAt, openDialer, openWhatsApp, logLeadTouch} from '../utils';
 import {ScreenIdentifiers} from '../routes';
 import SkeletonLoader from './SkeletonLoader';
 import ReportFilterModel from './ReportFilterModel';
@@ -472,6 +472,15 @@ export const LeadContainer = ({
           <View style={{alignItems: 'center', gap: 5}}>
             <Pressable
               onPress={() => {
+                // Record the WhatsApp tap server-side BEFORE opening the app, so
+                // even if the user never returns to fill the follow-up popup we
+                // still have proof-of-intent. Nonce is stashed so the popup PUT
+                // can link comment -> touch -> "Verified" engagement.
+                logLeadTouch({
+                  leadId: item?._id,
+                  channel: 'WHATSAPP',
+                  sessionId: authData?.sessionId,
+                });
                 handleQuickEdit(item);
                 openWhatsApp(item?.contactNumber, item?.firstName);
               }}
@@ -491,6 +500,11 @@ export const LeadContainer = ({
             </Pressable>
             <Pressable
               onPress={() => {
+                logLeadTouch({
+                  leadId: item?._id,
+                  channel: 'CALL',
+                  sessionId: authData?.sessionId,
+                });
                 handleQuickEdit(item);
                 openDialer(item?.contactNumber);
               }}

@@ -1,6 +1,7 @@
 // import {TEST_URL, LIVE_URL} from '@env';
 
 const TEST_URL = 'https://api.codeconnect.in/api/v1/';
+// const TEST_URL = 'http://localhost:9000/api/v1/';
 const LIVE_URL = 'https://api.codeconnect.in/api/v1/';
 // const TEST_URL = 'http://13.200.34.99:9000/api/v1/';
 // const LIVE_URL = 'http://13.200.34.99:9000/api/v1/';
@@ -39,6 +40,10 @@ export const END_POINT = {
     getNotification: "getNotification",
     seenUpdate : "seenUpdate",
     updateCompanyDetails : 'updateCompanyDetails',
-    updateDepartment : 'updateDepartment/'
+    updateDepartment : 'updateDepartment/',
+    // Lead-contact tracking — see leadTouch.service in backend.
+    // POST: `lead/${leadId}/touch` records a Call/WhatsApp/Email tap.
+    leadTouch: 'lead', // suffix `/${leadId}/touch` at call site
+    engagementReport: 'reports/engagement-per-day'
   },
 };

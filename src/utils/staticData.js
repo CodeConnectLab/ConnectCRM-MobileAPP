@@ -1,6 +1,6 @@
 import {Platform} from 'react-native';
-const androidVersion = 'v1.0.2';
-const iosVersion = 'v1.0.2';
+const androidVersion = 'v1.0.1';
+const iosVersion = 'v1.0.0';
 const CurrentYear = new Date().getFullYear();
 
 export const AppVersion = {
